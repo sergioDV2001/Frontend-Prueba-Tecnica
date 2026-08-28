@@ -1,6 +1,6 @@
 export const ROUTES = {
   home: '/',
-  productDetail: '/product/:id',
+  productDetail: '/product/:productId',
 }
 
 export const productDetailPath = (id) => `/product/${id}`

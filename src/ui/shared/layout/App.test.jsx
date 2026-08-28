@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import App from './App'
-import { ProductListPage } from './pages/ProductListPage'
+import { ProductListPage } from '../../ProductListPage'
 
-test('renderiza la pagina de listado en la ruta principal', () => {
+test('renderiza la página de listado en la ruta principal', () => {
   const router = createMemoryRouter(
     [
       {
@@ -17,7 +17,6 @@ test('renderiza la pagina de listado en la ruta principal', () => {
 
   render(<RouterProvider router={router} />)
 
-  expect(
-    screen.getByRole('heading', { name: /listado de productos/i }),
-  ).toBeInTheDocument()
+  expect(screen.getByRole('link', { name: /mobile store/i })).toBeInTheDocument()
+  expect(screen.getByText('iPhone 13')).toBeInTheDocument()
 })

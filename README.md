@@ -39,13 +39,33 @@ npm install
 
 ## Estructura del proyecto
 
+El proyecto separa **presentación (`ui/`)** de **lógica y datos (`features/`)**:
+`ui/` contiene todo lo relativo al frontend y `features/` toda la lógica de
+negocio junto con la integración del API. Cada vista agrupa su `page`, sus
+`components` y sus `utils`; lo transversal vive en la carpeta `shared` de cada
+capa.
+
 ```
 src/
-  main.jsx            # Punto de entrada (monta el Router)
-  App.jsx             # Layout raíz
-  index.css           # Estilos globales + taailwind
-  router/             # Definición de rutas y provider
-  pages/              # Vistas: ProductListPage, ProductDetailPage
-  constants/          # Configuración (URL API, claves de storage)
-  test/               # Configuración de tests
+  main.jsx                      # Punto de entrada (monta el Router)
+  test/                         # Configuración de tests
+  ui/                           # presentacion (todo el frontend)
+    shared/                     #   Reutilizable en UI
+      styles/                   #     Estilos globales + Tailwind
+      icons/                    #     Iconos SVG
+      components/               #     Componentes compartidos (Header, SearchBar…)
+      router/                   #     Rutas y provider de navegación
+      layout/                   #     Layout raíz (App)
+    ProductListPage/            #   Vista PLP
+      page/  components/  utils/ etc/
+    ProductDetailPage/          #   Vista PDP
+      page/  components/  utils/ etc/
+  features/                     # LÓGICA + INTEGRACIÓN API
+    shared/                     #   Config/utilidades transversales de la lógica
+      config/                   #     URL del API, TTL de caché, claves de storage
+    products/                   #   Datos y servicios de producto
+      mocks/                    #     Datos de ejemplo (temporal hasta la API)
 ```
+
+> El dominio `cart/` (acciones y contador del carrito) y los servicios de API
+> reales se añadirán dentro de `features/` en tareas posteriores.
