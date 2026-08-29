@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { MOCK_PRODUCT_DETAIL } from '../../../features/products/mocks/product-detail.mocks'
 import { LogoIcon } from '../../shared/icons'
 import { buildProductSpecs } from '../utils/buildProductSpecs'
+import { ProductActions } from '../components/ProductActions'
 
 function ProductDetailPage() {
   const product = MOCK_PRODUCT_DETAIL
@@ -53,54 +54,7 @@ function ProductDetailPage() {
             </dl>
           </section>
 
-          <section className="mt-8 space-y-5">
-            <div>
-              <h3 className="mb-2 text-sm font-semibold text-slate-800">
-                Almacenamiento
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {product.options.storages.map((storage, index) => (
-                  <button
-                    key={storage.code}
-                    type="button"
-                    className={`rounded-lg border px-4 py-2 text-sm font-medium transition ${
-                      index === 0
-                        ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
-                        : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
-                    }`}
-                  >
-                    {storage.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="mb-2 text-sm font-semibold text-slate-800">Color</h3>
-              <div className="flex flex-wrap gap-2">
-                {product.options.colors.map((color, index) => (
-                  <button
-                    key={color.code}
-                    type="button"
-                    className={`rounded-lg border px-4 py-2 text-sm font-medium transition ${
-                      index === 0
-                        ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
-                        : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
-                    }`}
-                  >
-                    {color.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <button
-              type="button"
-              className="w-full rounded-lg bg-indigo-600 py-3 font-semibold text-white transition hover:bg-indigo-700 sm:w-auto sm:px-10"
-            >
-              Añadir al carrito
-            </button>
-          </section>
+          <ProductActions product={product} />
         </div>
       </div>
     </main>
