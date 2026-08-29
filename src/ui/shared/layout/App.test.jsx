@@ -3,7 +3,15 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import App from './App'
 import { ProductListPage } from '../../ProductListPage'
 
-test('renderiza la página de listado en la ruta principal', () => {
+vi.mock('../../../features/products/services/productService', () => ({
+  getProducts: () =>
+    Promise.resolve([
+      { id: '1', brand: 'Apple', model: 'iPhone 13', price: '809' },
+    ]),
+  getProductById: () => Promise.resolve({}),
+}))
+
+test('renderiza el listado de productos en la ruta principal', async () => {
   const router = createMemoryRouter(
     [
       {
@@ -18,5 +26,5 @@ test('renderiza la página de listado en la ruta principal', () => {
   render(<RouterProvider router={router} />)
 
   expect(screen.getByRole('link', { name: /mobile store/i })).toBeInTheDocument()
-  expect(screen.getByText('iPhone 13')).toBeInTheDocument()
+  expect(await screen.findByText('iPhone 13')).toBeInTheDocument()
 })

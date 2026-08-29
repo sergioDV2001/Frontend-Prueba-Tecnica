@@ -9,8 +9,17 @@ export function ProductItem({ product }) {
         to={productDetailPath(product.id)}
         className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md"
       >
-        <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 text-slate-300">
-          <LogoIcon className="h-16 w-16" />
+        <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 p-4 text-slate-300">
+          {product.imgUrl ? (
+            <img
+              src={product.imgUrl}
+              alt={`${product.brand} ${product.model}`}
+              loading="lazy"
+              className="max-h-full max-w-full object-contain"
+            />
+          ) : (
+            <LogoIcon className="h-16 w-16" />
+          )}
         </div>
         <div className="flex flex-1 flex-col p-4">
           <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
