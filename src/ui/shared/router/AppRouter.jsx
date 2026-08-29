@@ -7,9 +7,14 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    handle: { crumb: () => ({ label: 'Productos', to: '/' }) },
     children: [
       { index: true, element: <ProductListPage /> },
-      { path: 'product/:productId', element: <ProductDetailPage /> },
+      {
+        path: 'product/:productId',
+        element: <ProductDetailPage />,
+        handle: { crumb: () => ({ label: 'Detalle' }) },
+      },
     ],
   },
 ])
