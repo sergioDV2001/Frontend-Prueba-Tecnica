@@ -1,12 +1,27 @@
-import { Link } from 'react-router-dom'
-import { MOCK_PRODUCT_DETAIL } from '../../../features/products/mocks/product-detail.mocks'
+import { Link, useParams } from 'react-router-dom'
+import { useProduct } from '../../../features/products/hooks/useProduct'
+import { useCartStore } from '../../../features/cart/store/cartStore'
+import { RequestStatus } from '../../shared/components/RequestStatus'
 import { LogoIcon } from '../../shared/icons'
-import { buildProductSpecs } from '../utils/buildProductSpecs'
+import { ProductSummary } from '../components/ProductSummary'
+import { ProductSpecs } from '../components/ProductSpecs'
 import { ProductActions } from '../components/ProductActions'
 
 function ProductDetailPage() {
-  const product = MOCK_PRODUCT_DETAIL
-  const specs = buildProductSpecs(product)
+  const { productId } = useParams()
+  const { product, loading, error } = useProduct(productId)
+  const addProduct = useCartStore((state) => state.addProduct)
+
+  if (loading || error) {
+    return (
+      <RequestStatus
+        loading={loading}
+        error={error}
+        loadingMessage="Cargando producto…"
+        errorMessage="No se pudo cargar el producto. Inténtalo de nuevo más tarde."
+      />
+    )
+  }
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
@@ -19,42 +34,23 @@ function ProductDetailPage() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div className="flex items-center justify-center rounded-2xl border border-slate-200 bg-white p-8">
-          <div className="flex aspect-[3/4] w-full max-w-xs items-center justify-center rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-300">
-            <LogoIcon className="h-24 w-24" />
-          </div>
+          {product.imgUrl ? (
+            <img
+              src={product.imgUrl}
+              alt={`${product.brand} ${product.model}`}
+              className="max-h-96 w-full max-w-xs object-contain"
+            />
+          ) : (
+            <div className="flex aspect-[3/4] w-full max-w-xs items-center justify-center rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-300">
+              <LogoIcon className="h-24 w-24" />
+            </div>
+          )}
         </div>
 
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-slate-400">
-            {product.brand}
-          </p>
-          <h1 className="mt-1 text-3xl font-bold text-slate-900">
-            {product.model}
-          </h1>
-          <p className="mt-2 text-2xl font-bold text-indigo-600">
-            {product.price} €
-          </p>
-
-          <section className="mt-8">
-            <h2 className="mb-3 text-lg font-semibold text-slate-800">
-              Especificaciones
-            </h2>
-            <dl className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
-              {specs.map((spec) => (
-                <div
-                  key={spec.label}
-                  className="flex justify-between gap-4 border-b border-slate-100 py-2"
-                >
-                  <dt className="text-sm text-slate-500">{spec.label}</dt>
-                  <dd className="text-right text-sm font-medium text-slate-800">
-                    {spec.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-
-          <ProductActions product={product} />
+          <ProductSummary product={product} />
+          <ProductSpecs product={product} />
+          <ProductActions product={product} onAddToCart={addProduct} />
         </div>
       </div>
     </main>
