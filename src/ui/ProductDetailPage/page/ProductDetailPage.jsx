@@ -48,7 +48,7 @@ function ProductDetailPage() {
               className="max-h-96 w-full max-w-xs object-contain"
             />
           ) : (
-            <div className="flex aspect-[3/4] w-full max-w-xs items-center justify-center rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 text-slate-300">
+            <div className="flex aspect-3/4 w-full max-w-xs items-center justify-center rounded-xl bg-linear-to-br from-slate-100 to-slate-200 text-slate-300">
               <LogoIcon className="h-24 w-24" />
             </div>
           )}
