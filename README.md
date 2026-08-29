@@ -66,6 +66,3 @@ src/
     products/                   #   Datos y servicios de producto
       mocks/                    #     Datos de ejemplo (temporal hasta la API)
 ```
-
-> El dominio `cart/` (acciones y contador del carrito) y los servicios de API
-> reales se añadirán dentro de `features/` en tareas posteriores.
