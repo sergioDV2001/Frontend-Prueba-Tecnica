@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { Header } from '../components/Header'
+import { Toaster } from '../components/Toaster'
 import { useBreadcrumbs } from '../router/useBreadcrumbs'
 import { useCartStore } from '../../../features/cart/store/cartStore'
 
@@ -11,6 +12,7 @@ function App() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Header cartCount={cartCount} breadcrumbs={breadcrumbs} />
       <Outlet />
+      <Toaster />
     </div>
   )
 }

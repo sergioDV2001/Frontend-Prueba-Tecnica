@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useProduct } from '../../../features/products/hooks/useProduct'
 import { useCartStore } from '../../../features/cart/store/cartStore'
 import { RequestStatus } from '../../shared/components/RequestStatus'
+import { useToastStore } from '../../shared/components/Toaster'
 import { LogoIcon } from '../../shared/icons'
 import { ProductSummary } from '../components/ProductSummary'
 import { ProductSpecs } from '../components/ProductSpecs'
@@ -11,6 +12,7 @@ function ProductDetailPage() {
   const { productId } = useParams()
   const { product, loading, error } = useProduct(productId)
   const addProduct = useCartStore((state) => state.addProduct)
+  const addToast = useToastStore((state) => state.addToast)
 
   if (loading || error) {
     return (
@@ -21,6 +23,11 @@ function ProductDetailPage() {
         errorMessage="No se pudo cargar el producto. Inténtalo de nuevo más tarde."
       />
     )
+  }
+
+  const handleAddToCart = async (payload) => {
+    await addProduct(payload)
+    addToast(`${product.brand} ${product.model} añadido al carrito`)
   }
 
   return (
@@ -50,7 +57,7 @@ function ProductDetailPage() {
         <div>
           <ProductSummary product={product} />
           <ProductSpecs product={product} />
-          <ProductActions product={product} onAddToCart={addProduct} />
+          <ProductActions product={product} onAddToCart={handleAddToCart} />
         </div>
       </div>
     </main>
