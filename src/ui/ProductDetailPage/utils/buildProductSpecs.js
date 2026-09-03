@@ -1,8 +1,10 @@
+import { formatPrice } from '../../shared/utils/formatPrice'
+
 export function buildProductSpecs(product) {
   return [
     { label: 'Marca', value: product.brand },
     { label: 'Modelo', value: product.model },
-    { label: 'Precio', value: `${product.price} €` },
+    { label: 'Precio', value: formatPrice(product.price) },
     { label: 'CPU', value: product.cpu },
     { label: 'RAM', value: product.ram },
     { label: 'Sistema operativo', value: product.os },

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { productDetailPath } from '../../../shared/router/routes'
 import { LogoIcon } from '../../../shared/icons'
+import { formatPrice } from '../../../shared/utils/formatPrice'
 
 export function ProductItem({ product }) {
   return (
@@ -29,7 +30,7 @@ export function ProductItem({ product }) {
             {product.model}
           </h3>
           <p className="mt-auto pt-3 text-lg font-bold text-indigo-600">
-            {product.price} €
+            {formatPrice(product.price)}
           </p>
         </div>
       </Link>

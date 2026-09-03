@@ -1,3 +1,5 @@
+import { formatPrice } from '../../../shared/utils/formatPrice'
+
 export function ProductSummary({ product }) {
   return (
     <div>
@@ -8,7 +10,7 @@ export function ProductSummary({ product }) {
         {product.model}
       </h1>
       <p className="mt-2 text-2xl font-bold text-indigo-600">
-        {product.price} €
+        {formatPrice(product.price)}
       </p>
     </div>
   )
