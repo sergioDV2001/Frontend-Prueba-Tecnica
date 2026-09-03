@@ -3,7 +3,11 @@ import { OptionSelector } from '../../../shared/components/OptionSelector'
 
 const firstCode = (options) => options[0]?.code
 
-export function ProductActions({ product, onAddToCart = () => {} }) {
+export function ProductActions({
+  product,
+  onAddToCart = () => {},
+  isAdding = false,
+}) {
   const { storages, colors } = product.options
   const [storageCode, setStorageCode] = useState(firstCode(storages))
   const [colorCode, setColorCode] = useState(firstCode(colors))
@@ -29,9 +33,10 @@ export function ProductActions({ product, onAddToCart = () => {} }) {
       <button
         type="button"
         onClick={handleAdd}
-        className="w-full rounded-lg bg-indigo-600 py-3 font-semibold text-white transition hover:bg-indigo-700 sm:w-auto sm:px-10"
+        disabled={isAdding}
+        className="w-full rounded-lg bg-indigo-600 py-3 font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10"
       >
-        Añadir al carrito
+        {isAdding ? 'Añadiendo…' : 'Añadir al carrito'}
       </button>
     </section>
   )

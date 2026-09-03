@@ -5,7 +5,7 @@ import { STORAGE_KEYS } from '../../shared/config'
 
 export const useCartStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       count: 0,
       adding: false,
       addProduct: async (payload) => {
@@ -15,8 +15,6 @@ export const useCartStore = create(
           const count = await addToCart(payload)
           set({ count })
           return count
-        } catch {
-          return get().count
         } finally {
           set({ adding: false })
         }

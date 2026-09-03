@@ -12,6 +12,7 @@ function ProductDetailPage() {
   const { productId } = useParams()
   const { product, loading, error } = useProduct(productId)
   const addProduct = useCartStore((state) => state.addProduct)
+  const isAdding = useCartStore((state) => state.adding)
   const addToast = useToastStore((state) => state.addToast)
 
   if (loading || error) {
@@ -26,8 +27,12 @@ function ProductDetailPage() {
   }
 
   const handleAddToCart = async (payload) => {
-    await addProduct(payload)
-    addToast(`${product.brand} ${product.model} añadido al carrito`)
+    try {
+      await addProduct(payload)
+      addToast(`${product.brand} ${product.model} añadido al carrito`)
+    } catch {
+      addToast('No se pudo añadir el producto al carrito', 'error')
+    }
   }
 
   return (
@@ -57,7 +62,11 @@ function ProductDetailPage() {
         <div>
           <ProductSummary product={product} />
           <ProductSpecs product={product} />
-          <ProductActions product={product} onAddToCart={handleAddToCart} />
+          <ProductActions
+            product={product}
+            onAddToCart={handleAddToCart}
+            isAdding={isAdding}
+          />
         </div>
       </div>
     </main>
